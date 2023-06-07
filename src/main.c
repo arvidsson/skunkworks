@@ -1,14 +1,16 @@
 #include "sokol_gfx.h"
 #include "sokol_app.h"
+#include "sokol_time.h"
 #include "sokol_log.h"
 #include "sokol_glue.h"
-
-#define UNUSED(x) (void)(x)
+#include "skunk.h"
 
 static sg_pass_action pass_action;
 
-static void init(void)
+static void Init(void)
 {
+    stm_setup();
+
     sg_setup(&(sg_desc){
         .context = sapp_sgcontext(),
         .logger.func = slog_func,
@@ -18,7 +20,7 @@ static void init(void)
     };
 }
 
-static void frame(void)
+static void Update(void)
 {
     float g = pass_action.colors[0].clear_value.g + 0.01f;
     pass_action.colors[0].clear_value.g = (g > 1.0f) ? 0.0f : g;
@@ -27,20 +29,20 @@ static void frame(void)
     sg_commit();
 }
 
-static void cleanup(void)
+static void Shutdown(void)
 {
     sg_shutdown();
 }
 
 sapp_desc sokol_main(int argc, char* argv[])
 {
-    UNUSED(argc);
-    UNUSED(argv);
+    unused(argc);
+    unused(argv);
 
     return (sapp_desc){
-        .init_cb = init,
-        .frame_cb = frame,
-        .cleanup_cb = cleanup,
+        .init_cb = Init,
+        .frame_cb = Update,
+        .cleanup_cb = Shutdown,
         .width = 400,
         .height = 300,
         .window_title = "Clear Sample",
