@@ -7,6 +7,14 @@
 #include <stdlib.h>
 #include <assert.h>
 
+#include "log.h"
+#include "sokol_app.h"
+#include "sokol_gfx.h"
+#include "sokol_time.h"
+#include "sokol_log.h"
+#include "sokol_glue.h"
+#include "scenes.h"
+
 // macros
 #define unused(x) (void)(x)
 #define len(array) (sizeof((array)) / (sizeof((array)[0])))
@@ -42,3 +50,8 @@ void SeedRngWithTime(void);
 i64 GetRandomInt(i64 min, i64 max);
 // generate float in range [min, max]
 f64 GetRandomFloat(f64 min, f64 max);
+
+// scene
+
+void TransitionScene(Scenes next);
+void UpdateScene(void);
