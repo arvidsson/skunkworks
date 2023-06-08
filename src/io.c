@@ -16,13 +16,14 @@ char* ReadFile(char* filename)
     fseek(f, 0, SEEK_END);
     long length = ftell(f);
     fseek(f, 0, SEEK_SET);
-    buffer = (char*)malloc(length + 1);
+    u64 size = (u64)length;
+    buffer = (char*)malloc(size + 1);
 
     if (buffer) {
-        fread(buffer, 1, length, f);
+        fread(buffer, 1, size, f);
     }
 
     fclose (f);
-    buffer[length] = '\0';
+    buffer[size] = '\0';
     return buffer;
 }
