@@ -55,7 +55,21 @@ static void Init(void)
     };
 }
 
-static void Update(void)
+static void Event(const sapp_event* ev)
+{
+    switch (ev->type) {
+        case SAPP_EVENTTYPE_KEY_DOWN:
+            if (ev->key_code == SAPP_KEYCODE_ENTER && ev->modifiers & SAPP_MODIFIER_ALT) {
+                sapp_toggle_fullscreen();
+            }
+            else if (ev->key_code == SAPP_KEYCODE_ESCAPE) {
+                sapp_quit();
+            }
+            break;
+    }
+}
+
+static void Frame(void)
 {
     sg_begin_default_pass(&state.passAction, sapp_width(), sapp_height());
     sg_apply_pipeline(state.pipeline);
@@ -65,7 +79,7 @@ static void Update(void)
     sg_commit();
 }
 
-static void Shutdown(void)
+static void Cleanup(void)
 {
     sg_shutdown();
 }
@@ -77,8 +91,9 @@ sapp_desc sokol_main(int argc, char* argv[])
 
     return (sapp_desc){
         .init_cb = Init,
-        .frame_cb = Update,
-        .cleanup_cb = Shutdown,
+        .frame_cb = Frame,
+        .cleanup_cb = Cleanup,
+        .event_cb = Event,
         .width = 400,
         .height = 300,
         .window_title = "skunkworks",
