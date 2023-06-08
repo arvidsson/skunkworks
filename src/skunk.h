@@ -3,7 +3,9 @@
 // std libs
 #include <stdint.h>
 #include <float.h>
+#include <stdbool.h>
 #include <stdlib.h>
+#include <assert.h>
 
 // macros
 #define unused(x) (void)(x)
@@ -26,6 +28,11 @@ static const i64 INT_MAX = INT64_MAX;
 static const f64 FLOAT_MAX = DBL_MAX;
 
 // io
+void ResetInputState(void);
+void UpdateInputState(u32 keycode, u32 eventType);
+bool IsKeyDown(u32 keycode);
+bool IsKeyPressed(u32 keycode);
+bool IsKeyReleased(u32 keycode);
 char* ReadFile(char* filename);
 
 // random

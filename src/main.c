@@ -59,18 +59,26 @@ static void Event(const sapp_event* ev)
 {
     switch (ev->type) {
         case SAPP_EVENTTYPE_KEY_DOWN:
+            UpdateInputState(ev->key_code, SAPP_EVENTTYPE_KEY_DOWN);
             if (ev->key_code == SAPP_KEYCODE_ENTER && ev->modifiers & SAPP_MODIFIER_ALT) {
                 sapp_toggle_fullscreen();
             }
-            else if (ev->key_code == SAPP_KEYCODE_ESCAPE) {
-                sapp_quit();
-            }
+            // else if (ev->key_code == SAPP_KEYCODE_ESCAPE) {
+            //     sapp_quit();
+            // }
+            break;
+        case SAPP_EVENTTYPE_KEY_UP:
+            UpdateInputState(ev->key_code, SAPP_EVENTTYPE_KEY_UP);
             break;
     }
 }
 
 static void Frame(void)
 {
+    if (IsKeyDown(SAPP_KEYCODE_ESCAPE)) {
+        sapp_quit();
+    }
+
     sg_begin_default_pass(&state.passAction, sapp_width(), sapp_height());
     sg_apply_pipeline(state.pipeline);
     sg_apply_bindings(&state.bindings);
