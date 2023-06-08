@@ -3,6 +3,7 @@
 // std libs
 #include <stdint.h>
 #include <float.h>
+#include <stdlib.h>
 
 // macros
 #define unused(x) (void)(x)
@@ -23,6 +24,9 @@ typedef double f64;
 // constants
 static const i64 INT_MAX = INT64_MAX;
 static const f64 FLOAT_MAX = DBL_MAX;
+
+// io
+char* ReadFile(char* filename);
 
 // random
 void SeedRng(u64 seed);
